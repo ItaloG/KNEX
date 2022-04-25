@@ -8,7 +8,7 @@ module.exports = {
   async create(req, res, next) {
     try {
       const { username } = req.body;
-      await knex("users").insert({username});
+      await knex("users").insert({ username });
       return res.status(201).send();
     } catch (error) {
       next(error);
@@ -16,13 +16,24 @@ module.exports = {
   },
   async update(req, res, next) {
     try {
-      const { username } = req.body
-      const { id } = req.params
+      const { username } = req.body;
+      const { id } = req.params;
 
-      await knex('users').update({ username }).where({ id })
+      await knex("users").update({ username }).where({ id });
       return res.status(200).send();
     } catch (error) {
-      next(error)
+      next(error);
     }
-  }
+  },
+  async delete(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      await knex("users").where({ id }).del();
+
+      return res.status(200).send();
+    } catch (error) {
+      next(error);
+    }
+  },
 };
