@@ -6,11 +6,18 @@
 module.exports = {
 
   development: {
-    client: 'pd',
+    client: 'pg',
     connection: {
       database: 'knex_test',
       user: 'postgres',
       password: 'root'
+    },
+    migrations: {
+      tableName: 'knex_migration',
+      directory: `${__dirname}/src/database/migrations`
+    },
+    seeds: {
+      directory: `${__dirname}/src/database/seeds`
     }
   }
 
