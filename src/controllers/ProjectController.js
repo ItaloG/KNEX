@@ -40,10 +40,10 @@ module.exports = {
   },
   async update(req, res, next) {
     try {
-      const { username } = req.body;
+      const { title } = req.body;
       const { id } = req.params;
 
-      await knex("users").update({ username }).where({ id });
+      await knex("projects").update({ title }).where({ id });
       return res.status(200).send();
     } catch (error) {
       next(error);
@@ -53,7 +53,7 @@ module.exports = {
     try {
       const { id } = req.params;
 
-      await knex("users").where({ id }).del();
+      await knex("projects").where({ id }).del();
 
       return res.status(200).send();
     } catch (error) {
