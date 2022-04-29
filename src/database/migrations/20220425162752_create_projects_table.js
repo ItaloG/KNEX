@@ -1,23 +1,26 @@
+const { onUpdateTrigger } = require("../../../knexfile");
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = (knex) =>
-  knex.schema.createTable("projects", (table) => {
-    table.increments("id");
-    table.text("title");
-    
-    table
-      .integer("user_id")
-      .references("users.id")
-      .notNullable()
-      .onDelete("CASCADE");
+exports.up = async (knex) =>
+  knex.schema
+    .createTable("projects", (table) => {
+      table.increments("id");
+      table.text("title");
 
-    table.timestamps(true, true);
-  });
+      table
+        .integer("user_id")
+        .references("users.id")
+        .notNullable()
+        .onDelete("CASCADE");
+
+      table.timestamps(true, true);
+    })
+    .then(() => knex.raw(onUpdateTrigger("projects")));
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = (knex) => knex.schema.dropTable("projects");
+exports.down = async (knex) => knex.schema.dropTable("projects");
